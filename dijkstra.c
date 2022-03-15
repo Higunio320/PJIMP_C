@@ -22,7 +22,9 @@ void push (kopiec* kopiec, int w, double* odleglosci) {					/* funkcja wczytujac
 }
 
 int pop (kopiec* kopiec, double* odleglosci) {						/* funkcja "zabierajaca" wierzcholek z kopca, ktora zwraca */
-	int v, i, j, ret;								/* jego numer */
+	if(kopiec->n == 0)								/* jego numer */
+		return -1;
+	int v, i, j, ret;
 	ret = kopiec->a[0];
 	v = kopiec->a[kopiec->n-1];
 	kopiec->n--;
@@ -78,6 +80,13 @@ void dijkstra(wierzcholek** a, int rozmiar, int start, int koniec) {			/* funkcj
 		tmp = pop(tabela, odleglosci);
 		if(tmp == koniec)
 			break;
+		if(tmp == -1) {
+			printf("graf niespojny :((((( jak do tego doszlo wgl\n");
+			free(tabela->a);
+			free(tabela);
+			free(odleglosci);
+			return;
+		}
 		a[tmp]->stan = 3;
 		for(i = 0; i < a[tmp]->n; i++) {
 			if(a[a[tmp]->w[i]]->stan < 2) {
@@ -100,4 +109,7 @@ void dijkstra(wierzcholek** a, int rozmiar, int start, int koniec) {			/* funkcj
 		printf("%d -> %d\n", a[i]->p, i);
 		i = a[i]->p;
 	}
+	free(tabela->a);
+	free(tabela);
+	free(odleglosci);
 }
