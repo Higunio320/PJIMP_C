@@ -45,11 +45,13 @@ int pop (kopiec* kopiec, double* odleglosci) {						/* funkcja "zabierajaca" wie
 
 void zmiana_odleglosci(kopiec *kopiec, int w, double* odleglosci) {			/* funkcja zmieniajaca polozenie danego wierzcholka w kopcu, gdy */
 	int i, tmp;									/* zostanie zmieniona droga do niego (gdy znaleziona zostanie krotsza */
-	for(i = kopiec->n; i >= 0; i--) {						/* od juz zapisanej */
+	for(i = (kopiec->n - 1); i >= 0; i--) {						/* od juz zapisanej */
 		if (kopiec->a[i] == w) {     /* "prymitywne wyszukiwanie wierzcholka - moze sie da poprawic" */
 			tmp = i;
 			break;
-		} 
+		}
+		if(i == 0)
+			printf("Cos poszlo nie tak\n");
 	}
 	i = (tmp - 1)/2;
 	while(tmp > 0 && (odleglosci[kopiec->a[i]] > odleglosci[kopiec->a[tmp]])) {
