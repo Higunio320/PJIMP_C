@@ -7,7 +7,7 @@ void double_size(int* a, int* n) {
 	(*n) *= 2;
 }
 
-void bfs(wierzcholek** a, int rozmiar) {
+int bfs(wierzcholek** a, int rozmiar) {
 	int i;
 	int x = 1;
 	int n = 2;
@@ -26,7 +26,7 @@ void bfs(wierzcholek** a, int rozmiar) {
 		if(p == 0) {
 			free(kolejka);
 			printf("**********\nGraf niespojny\n**********\n");
-			return;
+			return -1;
 		}
 		tmp = p-1;
 		for(i = 0; i < a[kolejka[0]]->n; i++) {
@@ -42,5 +42,6 @@ void bfs(wierzcholek** a, int rozmiar) {
 	}
 	free(kolejka);
 	printf("**********\nGraf spojny\n**********\n");
+	return 0;
 }
 
