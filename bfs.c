@@ -43,7 +43,7 @@ int bfs(wierzcholek** a, int rozmiar) {
 				przechowywane++;
 			}
 		}
-		kolejka[0] = kolejka[p-1];	/* przepisanie wierzcholka z konca tabeli na poczatek */
+		kolejka[0] = kolejka[przechowywane-1];	/* przepisanie wierzcholka z konca tabeli na poczatek */
 		przechowywane--;
 	}
 	free(kolejka);
