@@ -2,17 +2,24 @@
 #include <stdlib.h>
 #include "bfs.h"
 
-void double_size(int* a, int* n) {
-	a = realloc(a, 2*(*n)*sizeof(a));
-	(*n) *= 2;
+void wypisz_kolejke(int* kolejka, int p) {
+	int i;
+	printf("Kolejka : ");
+	for(i = 0; i < p; i++)
+		printf("%d ", kolejka[i]);
+	printf("\n");
+}
+
+void double_size(int* kolejka, int* size) {
+	printf("Zwiększam rozmiar kolejki z %d do %d\n", (*size), (*size)*2);
+	kolejka = (int *) realloc(kolejka, (sizeof(int)*(*size)*2));
+	(*size) *= 2;
 }
 
 int bfs(wierzcholek** a, int rozmiar) {
 	int i;
 	int x = 1;
-	int n = 2;
 	int p = 0;
-	int tmp = 0;
 	int *kolejka;
 	kolejka = (int *) malloc (sizeof(int)*rozmiar);
 	for(i = 0; i < a[0]->n; i++) {
@@ -28,7 +35,6 @@ int bfs(wierzcholek** a, int rozmiar) {
 			printf("**********\nGraf niespojny\n**********\n");
 			return -1;
 		}
-		tmp = p-1;
 		for(i = 0; i < a[kolejka[0]]->n; i++) {
 			if(a[a[kolejka[0]]->w[i]]->stan == 0) {
 				kolejka[p] = a[kolejka[0]]->w[i];

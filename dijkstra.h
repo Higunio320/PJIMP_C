@@ -1,9 +1,9 @@
 #include "bfs.h"
 
-typedef struct {
-	int s;
-	int n;
-	int* a;
+typedef struct {	/* struktura kopca */
+	int s;		/* aktualna wielkosc kopca (ile moze przechowywac danych) */
+	int n;		/* liczba przechochywanych wierzcholkow */
+	int* a;		/* kopiec */
 } kopiec;
 
 void push(kopiec* kopiec, int w, double* odleglosci);

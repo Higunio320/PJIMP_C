@@ -65,7 +65,15 @@ void zmiana_odleglosci(kopiec *kopiec, int w, double* odleglosci) {			/* funkcja
 
 
 void dijkstra(wierzcholek** a, int rozmiar, int start, int koniec) {			/* funkcja ktora steruje caloscia, a nastepnie drukuje dlugosc najkrotszej */
+	if (koniec > (rozmiar - 1)) {
+		printf("Wierzcholek %d nie miesci sie w grafie\n", koniec);
+		return;
+	}
 	int i, tmp;									/* sciezki oraz wierzcholki sie w niej zawierajace */
+	for(i = 0; i < rozmiar; i++) {
+		a[i]->p = 0;
+		a[i]->stan = 1;
+	}
 	double *odleglosci;
 	odleglosci = (double *) malloc(sizeof(double)*rozmiar);
 	kopiec *tabela;
