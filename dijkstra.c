@@ -3,21 +3,21 @@
 #include "dijkstra.h"
 
 
-void push (kopiec* kopiec, int w, double* odleglosci) {					/* funkcja wczytujaca wierzcholek do kopca*/
+void push (kopiec* kopiec, int wierzcholek, double* odleglosci) {					/* funkcja wczytujaca wierzcholek do kopca*/
 	int i, j;
 	if (kopiec->n == kopiec->s) {
 		kopiec->a = (int *) realloc(kopiec->a, sizeof(int)*(kopiec->s * 2));	/* powiekszenie rozmiaru kopca jesli zajdzie taka potrzeba */
 		kopiec->s *= 2;
 	}
-	kopiec->a[kopiec->n] = w;
+	kopiec->a[kopiec->n] = wierzcholek;
 	kopiec->n++;
 	i = kopiec->n - 1;
 	j = (i - 1)/2;
-	while(i > 0 && (odleglosci[kopiec->a[j]] > odleglosci[w])) {
+	while(i > 0 && (odleglosci[kopiec->a[j]] > odleglosci[wierzcholek])) {
 		kopiec->a[i] = kopiec->a[j];
 		i = j;
 		j = (i - 1)/2;
-		kopiec->a[i] = w;
+		kopiec->a[i] = wierzcholek;
 	}
 }
 
@@ -43,10 +43,10 @@ int pop (kopiec* kopiec, double* odleglosci) {						/* funkcja "zabierajaca" wie
 	return ret;
 }
 
-void zmiana_odleglosci(kopiec *kopiec, int w, double* odleglosci) {			/* funkcja zmieniajaca polozenie danego wierzcholka w kopcu, gdy */
+void zmiana_odleglosci(kopiec *kopiec, int wierzcholek, double* odleglosci) {			/* funkcja zmieniajaca polozenie danego wierzcholka w kopcu, gdy */
 	int i, tmp;									/* zostanie zmieniona droga do niego (gdy znaleziona zostanie krotsza */
 	for(i = (kopiec->n - 1); i >= 0; i--) {						/* od juz zapisanej */
-		if (kopiec->a[i] == w) {     /* "prymitywne wyszukiwanie wierzcholka - moze sie da poprawic" */
+		if (kopiec->a[i] == wierzcholek) {
 			tmp = i;
 			break;
 		}
@@ -58,7 +58,7 @@ void zmiana_odleglosci(kopiec *kopiec, int w, double* odleglosci) {			/* funkcja
 		kopiec->a[tmp] = kopiec->a[i];
 		tmp = i;
 		i = (tmp - 1)/2;
-		kopiec->a[tmp] = w;
+		kopiec->a[tmp] = wierzcholek;
 	}
 }
 
@@ -86,34 +86,34 @@ void dijkstra(wierzcholek** a, int rozmiar, int start, int koniec) {			/* funkcj
 	a[start]->stan = 3;
 	push(tabela, start, odleglosci);
 
-	while(a[koniec]->stan != 3) {
-		tmp = pop(tabela, odleglosci);
+	while(a[koniec]->stan != 3) { 			/* petla wykonuje sie az do momentu, gdy do wierzcholka koncowego zostanie znaleziona najkrotsza droga */
+		tmp = pop(tabela, odleglosci);		/* tmp przechowuje aktualnie odebrany wierzcholek ze szczytu kopca */
 		if(tmp == koniec)
 			break;
-		if(tmp == -1) {
-			printf("graf niespojny :((((( jak do tego doszlo wgl\n");
+		if(tmp == -1) {								/* funkcja "pop" zwraca -1, jesli nie ma juz zadnych elementow w kopcu, */
+			printf("Nie istnieje droga do wierzcholka: %d\n", koniec);	/* co oznacza, ze do danego wierzcholka nie istnieje droga */
 			free(tabela->a);
 			free(tabela);
 			free(odleglosci);
 			return;
 		}
 		a[tmp]->stan = 3;
-		for(i = 0; i < a[tmp]->n; i++) {
-			if(a[a[tmp]->w[i]]->stan < 2) {
+		for(i = 0; i < a[tmp]->n; i++) {		/* iteracja po kazdym wierzcholku polaczonym z wyciagnietym z kopca */
+			if(a[a[tmp]->w[i]]->stan < 2) {		/* jesli nie byl w kopcu, to nalezy go dodac */
 				odleglosci[a[tmp]->w[i]] = odleglosci[tmp] + a[tmp]->drogi[i];
 				push(tabela, a[tmp]->w[i], odleglosci);
 				a[a[tmp]->w[i]]->stan = 2;
 				a[a[tmp]->w[i]]->p = tmp;
 			} else {
-				if (odleglosci[a[tmp]->w[i]] > odleglosci[tmp] + a[tmp]->drogi[i]) {
-					odleglosci[a[tmp]->w[i]] = odleglosci[tmp] + a[tmp]->drogi[i];
-					a[a[tmp]->w[i]]->p = tmp;
+				if (odleglosci[a[tmp]->w[i]] > odleglosci[tmp] + a[tmp]->drogi[i]) {	/* jesli juz jest w kopcu, nalezy sprawdzic, czy droga przez */
+					odleglosci[a[tmp]->w[i]] = odleglosci[tmp] + a[tmp]->drogi[i];	/* wierzcholek przechowywany w "tmp" nie jest krotsza od juz */
+					a[a[tmp]->w[i]]->p = tmp;					/* w nim zapisanej */
 					zmiana_odleglosci(tabela, a[tmp]->w[i], odleglosci);
 				}
 			}
 		}
 	}
-	i = koniec;
+	i = koniec;						/* wydrukowanie dlugosci sciezki oraz wierzcholkow po kolei */
 	printf("Dlugosc sciezki: %f\n", odleglosci[koniec]);
 	while(i != start) {
 		printf("%d -> %d\n", a[i]->p, i);
