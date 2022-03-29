@@ -2,17 +2,16 @@
 #include"bfs.h"
 #include"reader.h"
 #include<stdio.h>
-void zapisz_graf( char* file_name,wierzcholek** wierzcholek, rozmiar* graf) {
+void zapisz_graf( char* file_name, wierzcholek** g, rozmiar* graf) {
 
-int k;
+int i,j;
 	if( graf!= NULL) {
 		FILE *out = fopen(file_name, "w"); // otwieram plik
 
 	fprintf(out, "%d %d\n", graf->col, graf->row); // wypiosuje kulumne i wiersz
-	for(k = 0; k < (graf->col) * (graf->row); k++) { // wypisuje tyle wierzcholkow ile rozmiar grafu
-		fprintf(out,"\t");		//znak tabulatora
-		while( wierzcholek[k]->x != NULL) {	// wypisuje dopoki sa wierzcholki
-			fprintf(out, " %d :%.16g ", wierzcholek[k]->x, wierzcholek[k]->drogi[k]);
+	for(i = 0; i < ((graf->col) * (graf->row)) - 1; i++) { // wypisuje tyle wierzcholkow ile rozmiar grafu
+		for(j = 0; j < g[i]->n; j++) {
+			fprintf(out, "\t%d :%f", g[i]->w[j], g[i]->drogi[j]);
 		}
 		fprintf(out, "\n");
 	}
