@@ -16,7 +16,7 @@ void double_size(int* kolejka, int* size) {					/* funkcja podwajajaca wielkosc 
 	(*size) *= 2;
 }
 
-int bfs(wierzcholek** a, int rozmiar) {
+void bfs(wierzcholek** a, int rozmiar) {
 	int i;
 	int odwiedzone = 1;		/* liczba odwiedzonych wierzcholkow (1, poniewaz pomijamy juz wierzcholek nr. 0) */
 	int przechowywane = 0;		/* liczba przechowywanych wierzcholkow w kolejce */
@@ -32,8 +32,8 @@ int bfs(wierzcholek** a, int rozmiar) {
 	while(odwiedzone != rozmiar) {		/* petla wykonuje sie poki nie zostana odwiedzone wszystkie wierzcholki   */
 		if(przechowywane == 0) {	/* jesli przechowywane jest 0 wierzcholkow i petla sie nie zakonczyla, to */
 			free(kolejka);		/* do minimum jednego nie istnieje droga - graf niespojny */
-			printf("\n**********\nGraf niespojny\n**********\n\n");
-			return -1;
+			printf("\n\n\t\t\tGraf niespoj\n\n");
+			return;
 		}
 		for(i = 0; i < a[kolejka[0]]->n; i++) {				/* dodanie do kolejki kazdego wierzcholka, ktory */
 			if(a[a[kolejka[0]]->w[i]]->stan == 0) {			/* jest polaczony z tym z poczatku kolejki, oraz */
@@ -47,7 +47,7 @@ int bfs(wierzcholek** a, int rozmiar) {
 		przechowywane--;
 	}
 	free(kolejka);
-	printf("**********\nGraf spojny\n**********\n\n");
-	return 0;
+	printf("\n\n\t\t\tGraf spojny\n\n\n");
+	return;
 }
 

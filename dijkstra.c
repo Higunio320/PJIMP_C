@@ -90,8 +90,8 @@ void dijkstra(wierzcholek** a, int rozmiar, int start, int koniec) {			/* funkcj
 		tmp = pop(tabela, odleglosci);		/* tmp przechowuje aktualnie odebrany wierzcholek ze szczytu kopca */
 		if(tmp == koniec)
 			break;
-		if(tmp == -1) {								/* funkcja "pop" zwraca -1, jesli nie ma juz zadnych elementow w kopcu, */
-			printf("Nie istnieje droga do wierzcholka: %d\n", koniec);	/* co oznacza, ze do danego wierzcholka nie istnieje droga */
+		if(tmp == -1) {										/* funkcja "pop" zwraca -1, jesli nie ma juz zadnych elementow w kopcu, */
+			printf("Nie istnieje droga pomiedzy wierzcholkami %d i %d\n", start, koniec);	/* co oznacza, ze do danego wierzcholka nie istnieje droga */
 			free(tabela->a);
 			free(tabela);
 			free(odleglosci);

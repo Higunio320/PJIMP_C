@@ -10,5 +10,5 @@ typedef struct {
 
 void double_size(int* a, int* n);
 
-int bfs(wierzcholek** a, int rozmiar);
+void bfs(wierzcholek** a, int rozmiar);
 
