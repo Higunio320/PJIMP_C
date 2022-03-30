@@ -32,7 +32,7 @@ void bfs(wierzcholek** a, int rozmiar) {
 	while(odwiedzone != rozmiar) {		/* petla wykonuje sie poki nie zostana odwiedzone wszystkie wierzcholki   */
 		if(przechowywane == 0) {	/* jesli przechowywane jest 0 wierzcholkow i petla sie nie zakonczyla, to */
 			free(kolejka);		/* do minimum jednego nie istnieje droga - graf niespojny */
-			printf("\n\n\t\t\tGraf niespoj\n\n");
+			printf("\n\n\t\t\tGraf niespojny\n\n");
 			return;
 		}
 		for(i = 0; i < a[kolejka[0]]->n; i++) {				/* dodanie do kolejki kazdego wierzcholka, ktory */
