@@ -176,6 +176,7 @@ int main(int argc, char **argv) {
 		return 1;
 	}
 
+
 	while(i < argc) {
 		if (!strcmp(argv[i], "-b")) {
 			bfs(graf, szerokosc*wysokosc);
