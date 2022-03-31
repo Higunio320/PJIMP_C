@@ -6,6 +6,16 @@
 #include "writer.h"
 #include "string.h"
 
+void free_graf(wierzcholek** graf, int rozmiar) {
+	int i, j;
+	for(i = rozmiar-1; i > -1; i--) { 
+		free(graf[i]->w);
+		free(graf[i]->drogi);
+		free(graf[i]);
+	}
+	free(graf);
+}
+
 int czy_liczba(char *a) {
 	char *p;
 	p = &a[0];
@@ -111,6 +121,7 @@ int main(int argc, char **argv) {
 				if(!strcmp(argv[7], "-s")) {
 					if(zapisz_graf(argv[8], graf, wysokosc, szerokosc) == 1) {
 						printf("Nie udalo sie otworzyc pliku %s\n", argv[8]);
+						free_graf(graf, wysokosc*szerokosc);
 						return 1;
 					} else {
 						i += 2;
@@ -150,9 +161,11 @@ int main(int argc, char **argv) {
 				break;
 			case 1:
 				printf("Bledny format pliku\n");
+				free_graf(graf, wysokosc*szerokosc);
 				return 1;
 			case 2:
 				printf("Nie udalo sie otworzyc pliku %s\n", nazwa_pliku);
+				free_graf(graf, wysokosc*szerokosc);
 				return 1;
 			default:
 				break;
@@ -168,21 +181,30 @@ int main(int argc, char **argv) {
 			bfs(graf, szerokosc*wysokosc);
 			i++;
 		} else if (!strcmp(argv[i], "-d")) {
-			if(argc > i + 1) {
-				if(czy_liczba(argv[i+1]) == 0 && czy_liczba(argv[i+2]) == 0) {
+			if(argc > i + 2) {
+				if((czy_liczba(argv[i+1]) == 0) && (czy_liczba(argv[i+2]) == 0)) {
 					dijkstra(graf, szerokosc*wysokosc, atoi(argv[i+1]), atoi(argv[i+2]));
 					i += 3;
 				} else {
 					printf("Bledne argumenty wierzcholkow, dla ktorych ma zostac obliczona najkrotsza sciezka\n");
+					free_graf(graf, szerokosc*wysokosc);
 					return 1;
 				}
+			} else {
+				wypisz_blad(0);
+				free_graf(graf, szerokosc*wysokosc);
+				return 1;
 			}
 		} else {
 			printf("Niepoprawny argument: %s\n", argv[i]);
+			free_graf(graf, szerokosc*wysokosc);
 			return 1;
 		}
 
 	}
+	free_graf(graf, szerokosc*wysokosc);
+	return 0;
 }
+
 
 
