@@ -1,1 +1,1 @@
-int zapisz_graf(char* file_name, wierzcholek** wierzcholek, int wysokosc, int szerokosc);
+int zapisz_graf( char* file_name, wierzcholek** wierzcholek, int szerokosc, int wysokosc);
