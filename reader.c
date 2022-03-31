@@ -38,8 +38,7 @@ int czytaj_graf(char* file_name, wierzcholek** wierzcholek, int wysokosc, int sz
     int k;
     int linia = 0;
     int i = 0;
-   /* int row,col;*/
-    
+     
     /*wczytywanie liczby kolumn i wierszy*/
     int licznik = 0;
     c = fgetc(in);
