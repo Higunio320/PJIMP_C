@@ -2,13 +2,6 @@
 #include <stdlib.h>
 #include "bfs.h"
 
-void wypisz_kolejke(int* kolejka, int p) {					/* funkcja wypisujaca kolejke - przydatne w naprawianiu bledow */
-	int i;									/* "do usuniecia w ostatecznej wersji" */
-	printf("Kolejka : ");
-	for(i = 0; i < p; i++)
-		printf("%d ", kolejka[i]);
-	printf("\n");
-}
 
 void double_size(int* kolejka, int* size) {					/* funkcja podwajajaca wielkosc kolejki, gdy zajdzie taka potrzeba */
 	printf("Zwiększam rozmiar kolejki z %d do %d\n", (*size), (*size)*2);	/* z jakiegos poowodu nie dziala */
