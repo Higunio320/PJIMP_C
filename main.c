@@ -183,7 +183,6 @@ int main(int argc, char **argv) {
 		}
 
 	}
-	printf("Koniec dzialania programu\n");
 }
 
 
