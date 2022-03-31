@@ -37,7 +37,7 @@ void wypisz_blad (int kod) {
 			printf("Niepoprawna wielkosc grafu\n");
 			break;
 		case 2:
-			printf("Pierwszym argument musi okreslac generacje lub czytanie grafu\n");
+			printf("Pierwszy argument musi okreslac generacje lub czytanie grafu\n");
 			break;
 		case 3:
 			printf("Niepoprawny przedzial losowanych drog\n");
