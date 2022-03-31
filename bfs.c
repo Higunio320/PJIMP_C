@@ -2,46 +2,48 @@
 #include <stdlib.h>
 #include "bfs.h"
 
-void double_size(int* a, int* n) {
-	a = realloc(a, 2*(*n)*sizeof(a));
-	(*n) *= 2;
+
+void double_size(int* kolejka, int* size) {					/* funkcja podwajajaca wielkosc kolejki, gdy zajdzie taka potrzeba */
+	printf("Zwiększam rozmiar kolejki z %d do %d\n", (*size), (*size)*2);	/* z jakiegos poowodu nie dziala */
+	kolejka = (int *) realloc(kolejka, (sizeof(int)*(*size)*2));
+	(*size) *= 2;
 }
 
-int bfs(wierzcholek** a, int rozmiar) {
+void bfs(wierzcholek** a, int rozmiar) {
 	int i;
-	int x = 1;
-	int n = 2;
-	int p = 0;
-	int tmp = 0;
+	int odwiedzone = 1;		/* liczba odwiedzonych wierzcholkow (1, poniewaz pomijamy juz wierzcholek nr. 0) */
+	int przechowywane = 0;		/* liczba przechowywanych wierzcholkow w kolejce */
 	int *kolejka;
+	for(i = 0; i < rozmiar; i++) {
+		a[i]->stan = 0;
+	}
 	kolejka = (int *) malloc (sizeof(int)*rozmiar);
 	for(i = 0; i < a[0]->n; i++) {
 		kolejka[i] = a[0]->w[i];
 		a[a[0]->w[i]]->stan = 1;
-		x++;
-		p++;
+		odwiedzone++;
+		przechowywane++;
 	}
 	a[0]->stan = 1;
-	while(x != rozmiar) {
-		if(tmp == p) {
-			free(kolejka);
-			return 1;
+	while(odwiedzone != rozmiar) {		/* petla wykonuje sie poki nie zostana odwiedzone wszystkie wierzcholki   */
+		if(przechowywane == 0) {	/* jesli przechowywane jest 0 wierzcholkow i petla sie nie zakonczyla, to */
+			free(kolejka);		/* do minimum jednego nie istnieje droga - graf niespojny */
+			printf("Graf niespojny\n");
+			return;
 		}
-		tmp = p-1;
-		for(i = 0; i < a[kolejka[0]]->n; i++) {
-			/*if(p == n) 
-				double_size(kolejka, &n);*/
-			if(a[a[kolejka[0]]->w[i]]->stan == 0) {
-				kolejka[p] = a[kolejka[0]]->w[i];
+		for(i = 0; i < a[kolejka[0]]->n; i++) {				/* dodanie do kolejki kazdego wierzcholka, ktory */
+			if(a[a[kolejka[0]]->w[i]]->stan == 0) {			/* jest polaczony z tym z poczatku kolejki, oraz */
+				kolejka[przechowywane] = a[kolejka[0]]->w[i];   /* jeszcze w niej nie jest */
 				a[a[kolejka[0]]->w[i]]->stan = 1;
-				x++;
-				p++;
+				odwiedzone++;
+				przechowywane++;
 			}
 		}
-		kolejka[0] = kolejka[p-1];
-		p--;
+		kolejka[0] = kolejka[przechowywane-1];	/* przepisanie wierzcholka z konca tabeli na poczatek */
+		przechowywane--;
 	}
 	free(kolejka);
-	return 0;
+	printf("Graf spojny\n");
+	return;
 }
 
