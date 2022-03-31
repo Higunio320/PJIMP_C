@@ -112,6 +112,10 @@ int main(int argc, char **argv) {
 				printf("Zly wariant\n");
 				return 1;
 			}
+			if(min > max) {
+				wypisz_blad(3);
+				return 1;
+			}
 			graf = (wierzcholek **) malloc (sizeof(wierzcholek*)*wysokosc*szerokosc);
 			for(i = 0; i < szerokosc*wysokosc; i++)
 				graf[i] = (wierzcholek *) malloc (sizeof(wierzcholek));
