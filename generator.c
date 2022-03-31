@@ -4,7 +4,8 @@
 #include <stdlib.h>
 												/* wariant = 0 - wagi krawedzi musza byc takie same z obu wierzcholkow */
 void wpisz_dlugosci(wierzcholek** wierzcholek, int numer, int liczba_drog, double min, double max, int wariant) {	/* funkcja wpisujaca dlugosci krawedzi */
-	int i, j, tmp;													/* wychodzacych z danego wierzcholka */
+	int i, j, tmp;	/* wychodzacych z danego wierzcholka */
+	double x;
 	wierzcholek[numer]->drogi = (double *) malloc (sizeof(double) * liczba_drog);
 	for(i = 0; i < liczba_drog; i++) {
 		if ((wierzcholek[numer]->w[i] < numer) && (wariant == 0)) {				/* jesli wariant = 0, to wagi krawedzi miedzy danymi wierzcholkami */
@@ -16,7 +17,10 @@ void wpisz_dlugosci(wierzcholek** wierzcholek, int numer, int liczba_drog, doubl
 			}
 			wierzcholek[numer]->drogi[i] = wierzcholek[wierzcholek[numer]->w[i]]->drogi[tmp];
 		} else {										/* gdy moga byc rozne lub dane polaczenie jeszcze nie istnieje */
-			wierzcholek[numer]->drogi[i] = min + (max - min)*((double) rand()/RAND_MAX);	/* nalezy dana wage krawedzi wygenerowac */
+			x = min + (max - min)*((double) rand()/RAND_MAX);				/* nalezy dana wage krawedzi wygenerowac */
+			while(x < 0.0001)
+				x = min + (max - min)*((double) rand()/RAND_MAX);
+			wierzcholek[numer]->drogi[i] = x;
 		}
 	}
 }

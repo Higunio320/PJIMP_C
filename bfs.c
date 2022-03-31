@@ -21,6 +21,9 @@ void bfs(wierzcholek** a, int rozmiar) {
 	int odwiedzone = 1;		/* liczba odwiedzonych wierzcholkow (1, poniewaz pomijamy juz wierzcholek nr. 0) */
 	int przechowywane = 0;		/* liczba przechowywanych wierzcholkow w kolejce */
 	int *kolejka;
+	for(i = 0; i < rozmiar; i++) {
+		a[i]->stan = 0;
+	}
 	kolejka = (int *) malloc (sizeof(int)*rozmiar);
 	for(i = 0; i < a[0]->n; i++) {
 		kolejka[i] = a[0]->w[i];
@@ -32,7 +35,7 @@ void bfs(wierzcholek** a, int rozmiar) {
 	while(odwiedzone != rozmiar) {		/* petla wykonuje sie poki nie zostana odwiedzone wszystkie wierzcholki   */
 		if(przechowywane == 0) {	/* jesli przechowywane jest 0 wierzcholkow i petla sie nie zakonczyla, to */
 			free(kolejka);		/* do minimum jednego nie istnieje droga - graf niespojny */
-			printf("\n\n\t\t\tGraf niespojny\n\n");
+			printf("Graf niespojny\n");
 			return;
 		}
 		for(i = 0; i < a[kolejka[0]]->n; i++) {				/* dodanie do kolejki kazdego wierzcholka, ktory */
@@ -47,7 +50,7 @@ void bfs(wierzcholek** a, int rozmiar) {
 		przechowywane--;
 	}
 	free(kolejka);
-	printf("\n\n\t\t\tGraf spojny\n\n\n");
+	printf("Graf spojny\n");
 	return;
 }
 

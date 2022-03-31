@@ -68,6 +68,10 @@ void dijkstra(wierzcholek** a, int rozmiar, int start, int koniec) {			/* funkcj
 	if (koniec > (rozmiar - 1)) {
 		printf("Wierzcholek %d nie miesci sie w grafie\n", koniec);
 		return;
+	} 
+	if(start > (rozmiar - 1)) {
+		printf("Wierzcholek %d nie miesci sie w grafie\n", start);
+		return;
 	}
 	int i, tmp;									/* sciezki oraz wierzcholki sie w niej zawierajace */
 	for(i = 0; i < rozmiar; i++) {
